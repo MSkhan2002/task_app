@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background: white;
+            padding: 30px 40px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            background: #e8e8e8;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Todo App</h1>
+        <form id="form">
+            <input type="text" id="todotask" required placeholder="Enter Your Task">
+            <button type="submit">Add</button>
+        </form>
+        <ul id="tasklist"></ul>
+    </div>
+
+    <script>
+        let form = document.getElementById("form");
+        let todotask = document.getElementById("todotask");
+        let tasklist = document.getElementById("tasklist");
+        let inputdata = JSON.parse(localStorage.getItem("inputdata")) || [];
+
+        form.addEventListener("submit", function (event) {
+            event.preventDefault();
+            let tasktext = todotask.value.trim();
+            if (tasktext !== "") {
+                inputdata.push(tasktext);
+                localStorage.setItem("inputdata", JSON.stringify(inputdata));
+                displaytask();
+                form.reset();
+            }
+        });
+
+        function displaytask() {
+            tasklist.innerHTML = "";
+            inputdata.forEach(function (user) {
+                let li = document.createElement("li");
+                li.innerText = user;
+                tasklist.appendChild(li);
+            });
+        }
+
+        displaytask();
+    </script>
+</body>
+
+</html>
